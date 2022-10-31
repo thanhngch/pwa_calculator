@@ -1,7 +1,5 @@
-html {
-    background-color: #0d0d0d;
-}
 body {
+    background-color: #0d0d0d;
     font-weight: bold;
     font-size: 2em;
     position: relative;
@@ -20,6 +18,13 @@ body {
 #root {
     height: 100%;
     position: absolute;
+}
+
+@media only screen and (max-width: 700px) {
+    
+    .func {
+        display: none !important;
+    }
 }
 
 .wrap-container {
@@ -47,13 +52,15 @@ body {
 
 .wrap-input .answer {
     color: white;
-    font-size: 200%;
+    font-size: 150%;
     line-height: 1em;
+    word-break: break-all;
 }
 
 .wrap-input .input {
     color: #8f8f8f;
     font-size: 70%;
+    word-break: break-all;
 }
 
 .wrap-operator {
@@ -84,6 +91,11 @@ body {
     font-size: 120%;
     text-align: center;
     border: none;
+}
+
+.wrap-operator .row > .btn.func {
+    font-size: 70%;
+    font-weight: normal;
 }
 
 .wrap-operator .row > .btn.sm-font {

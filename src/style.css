@@ -1,0 +1,122 @@
+html {
+    background-color: #0d0d0d;
+}
+body {
+    font-weight: bold;
+    font-size: 2em;
+    position: relative;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.noselect {
+    -webkit-touch-callout: none; 
+      -webkit-user-select: none; 
+       -khtml-user-select: none; 
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none; 
+}
+
+#root {
+    height: 100%;
+    position: absolute;
+}
+
+.wrap-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-content: flex-end;
+    justify-content: flex-end;
+}
+
+.wrap-input {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 100vw;
+}
+
+.wrap-input .item {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: column;
+    margin: 8px;
+}
+
+.wrap-input .answer {
+    color: white;
+    font-size: 200%;
+    line-height: 1em;
+}
+
+.wrap-input .input {
+    color: #8f8f8f;
+    font-size: 70%;
+}
+
+.wrap-operator {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    touch-action: none;
+}
+
+.wrap-operator .row {
+    display: flex;
+    height: 20%;
+}
+
+.wrap-operator .row > .btn {
+    border-radius: 1000px;
+    width: 25%;
+    color: #fff;
+    background-color: #434343;
+    display: inline-block;
+    /* justify-content: center;
+    align-items: center; */
+    height: calc(100% - 10px);
+    margin: 6px 8px;
+    transition: background-color 0.15s ease-in-out;
+    padding: 0;
+    font-weight: bold;
+    font-size: 120%;
+    text-align: center;
+    border: none;
+}
+
+.wrap-operator .row > .btn.sm-font {
+    font-size: 80%;
+}
+
+.wrap-operator .row > .ops {
+    background-color: #1976d2;
+    border-radius: 1000px;
+}
+
+.wrap-operator .row > .sys {
+    background-color: #8a8a8a;
+}
+
+
+.wrap-operator .row > .btn:active {
+    background-color: #999;
+    
+}
+
+.wrap-operator .row > .btn.ops:active {
+    background-color: #78a3cd;
+}
+
+.wrap-operator .row > .btn.sys:active {
+    background-color: #eee;
+}
+
+.wrap-operator .row > .btn.btn-enable {
+    background-color: #1976d2;
+}
+
+.wrap-operator .row > .btn.func {
+    background-color: #242424;
+}

@@ -1,0 +1,42 @@
+@media only screen and (min-width: 701px) {
+    .func2 {
+        display: none !important;
+    }
+}
+@media only screen and (max-width: 700px) {
+    .func {
+        display: none !important;
+    }
+    .func2 {
+        display: block !important;
+    }
+    .wrap-operator .row > .btn.func {
+        background-color: transparent;
+    }
+    .wrap-operator .row > .btn {
+        min-height: 33px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    body {
+        font-size: 1.4em;
+    }
+    .wrap-operator .row > .btn {
+        margin: 3px 3px;
+        min-height: 28px;
+    }
+}
+
+@media only screen and (max-width: 300px) {
+    body {
+        font-size: 1em;
+    }
+    .func2 {
+        display: none !important;
+    }
+    .wrap-operator .row > .btn {
+        margin: 2px 2px;
+        min-height: 25px;
+    }
+}

@@ -29,22 +29,23 @@ export interface History {
 }
 
 const math = create(all, {
-    epsilon: 1e-12,
-    number: 'number',
-    precision: 64,
+    epsilon: 1e-100,
+    number: 'BigNumber',
+    precision: 101,
     predictable: true,
     randomSeed: null
 });
 const parser = math.parser();
 
 parser.evaluate('sqrt3(x) = x ^ (1/3)');
-parser.evaluate('ln(x) = log(x) / log(e)');
-parser.evaluate('log2(x) = log(x) / log(2)');
-parser.evaluate('log10(x) = log(x) / log(10)');
+parser.evaluate('ln(x) = log2(x)');
 parser.evaluate('ans = 0');
 parser.evaluate('mem = 0');
-parser.evaluate('memadd(x) = mem + x');
-parser.evaluate('memsub(x) = mem - x');
+parser.evaluate('add(x) = mem + x');
+parser.evaluate('sub(x) = mem - x');
+parser.evaluate('memclear() = 0');
+parser.evaluate('memadd(x) = mem');
+parser.evaluate('memsub(x) = mem');
 
 
 export class App extends React.Component<AppProp, AppState> {
@@ -52,6 +53,7 @@ export class App extends React.Component<AppProp, AppState> {
     refCo: React.RefObject<HTMLDivElement>;
     history: History[];
     lastAns: string;
+    mem: string;
 
     constructor(props: AppProp) {
         super(props);
@@ -66,6 +68,7 @@ export class App extends React.Component<AppProp, AppState> {
             exp: false,
         };
         this.lastAns = '0';
+        this.mem = '0';
     }
 
     calWidth = () => {
@@ -158,6 +161,72 @@ export class App extends React.Component<AppProp, AppState> {
                     exp: false,
                 }
             }
+            if (btn == 'memadd') {
+                let input = prevState.input
+                if (prevState.isCal) {
+                    input = this.lastAns.replace(/ /g, '');
+                }
+                input = input || '0';
+                let evaluation = this.getEvalutionBeforeParse(input);
+                try {
+                    let ans = parser.evaluate('mem = add(' + evaluation + ')');
+                    let ansStr = this.getAnsFromEvalutionResult(ans);
+                    this.mem = ansStr;
+                } catch (e) {
+                    this.mem = '0';
+                    return {
+                        resize: false,
+                        input: 'Parse error',
+                        isCal: true,
+                        exp: false,
+                    }
+                }
+                return {
+                    resize: false,
+                    input: 'memadd(' + input + ')',
+                    isCal: true,
+                    exp: false,
+                }
+            }
+            if (btn == 'memsub') {
+                // let newInput = this.lastAns.replace(/ /g, '');
+                let input = prevState.input;
+                if (prevState.isCal) {
+                    input = this.lastAns.replace(/ /g, '');
+                }
+                input = input || '0';
+                let evaluation = this.getEvalutionBeforeParse(input);
+                try {
+                    let ans = parser.evaluate('mem = sub(' + evaluation + ')');
+                    let ansStr = this.getAnsFromEvalutionResult(ans);
+                    this.mem = ansStr;
+                } catch (e) {
+                    this.mem = '0';
+                    return {
+                        resize: false,
+                        input: 'Parse error',
+                        isCal: true,
+                        exp: false,
+                    }
+                }
+                return {
+                    resize: false,
+                    input: 'memsub(' + input + ')',
+                    isCal: true,
+                    exp: false,
+                }
+            }
+            
+            if (btn == 'memclear') {
+                parser.evaluate('mem = 0');
+                this.mem = '0';
+                return {
+                    resize: false,
+                    input: 'memclear()',
+                    isCal: true,
+                    exp: false,
+                }
+            }
             if (btn == 'DEL') {
                 console.log('input = \'' + prevState.input + '\'')
                 let removeChar = 1;
@@ -216,7 +285,7 @@ export class App extends React.Component<AppProp, AppState> {
             }
 
             if (this.isFuncBtn(btn) && (prevState.isCal || prevState.input == '')) {
-                btn = this.lastAns + btn;
+                btn = this.lastAns.replace(/ /g, '') + btn;
             }
 
             let newInput = prevState.input;
@@ -278,28 +347,43 @@ export class App extends React.Component<AppProp, AppState> {
         return evaluation;
     }
     
-    getAnsStr = () => {
+    getEvalutionBeforeParse = (input: string) => {
+        if (input[input.length - 1] == '=') {
+            input = input.substring(0, input.length - 1);
+        }
+        let evalution = closeBracket(this.inputToEval(input));
+        return evalution;
+    }
+
+    getAnsFromEvalutionResult = (ans: any) => {
+        let ansStr = math.format(ans, {
+            precision: 10,
+            upperExp: 10,
+        });
+        if (ansStr == 'undefined') {
+            return '0';
+        }
+        return ansStr;
+    }
+
+    getAnsStr = (input: string) => {
         if (this.state.resize) {
             return this.lastAns;
         }
+        
         try {
-            let evalution = closeBracket(this.inputToEval(this.state.input));
+            let evalution = closeBracket(this.inputToEval(input));
             console.log('evalution', evalution);
             let ans = parser.evaluate(evalution);
-            let ansStr = math.format(ans, {
-                precision: 10,
-                upperExp: 10,
-            });
-            if (ansStr == 'undefined') {
-                return '0';
-            }
+            let ansStr = this.getAnsFromEvalutionResult(ans);
+            console.log('ans11', ansStr);
             parser.evaluate('ans = ' + ansStr);
             ansStr = formatNumber(ansStr);
             this.lastAns = ansStr;
             return ansStr;
         } catch(e) {
             console.error(e);
-            this.lastAns = 'Parse error';
+            this.lastAns = '0';
             return 'Parse error';
         }
         
@@ -318,7 +402,7 @@ export class App extends React.Component<AppProp, AppState> {
         if (input.trim() == '=') {
             return '';
         }
-        input = input.replace(/log10/g, 'log<sub>10</sub>');
+        input = input.replace(/log10/g, 'log');
         input = input.replace(/log2/g, 'log<sub>2</sub>');
         input = input.replace(/\^\(-1\)/g, '<sup>-1</sup>');
         input = input.replace(/\^\(2\)/g, '<sup>2</sup>');
@@ -348,11 +432,14 @@ export class App extends React.Component<AppProp, AppState> {
                         { this.state.isCal && <>
                                 <div className="input"
                                     dangerouslySetInnerHTML={{ __html: this.displayInput(this.state.input) }}></div>
-                                <div className="answer">{this.getAnsStr()}</div>
+                                <div className="answer">{this.getAnsStr(this.state.input)}</div>
                             </>
                         }
                         {!this.state.isCal && <div className="answer" 
                             dangerouslySetInnerHTML={{ __html: this.displayInput(this.state.input) }}></div>
+                        }
+                        { this.mem != '0' && 
+                            <div className="mem">mem = {formatNumber(this.mem)}</div>
                         }
                     </div>
                 </div>
@@ -369,16 +456,16 @@ export class App extends React.Component<AppProp, AppState> {
                             <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'atan(')} className="btn func func2 sm-font">tan<sup>-1</sup></button>
                         </>}
                         <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '°')} className="btn func func2">°</button>
-                        <button {...disabledExp} onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '^(-1)')} className="btn func func2">x<sup>-1</sup></button>
+                        <button {...disabledExp} onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '^(-1)')} className="btn func func2 sm-font">x<sup>-1</sup></button>
                     </div>
                     <div className="row">
                         { !this.state.twoFunc && <>
                             <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'log10(')} className="btn func func2 sm-font">log<sub>10</sub></button>
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'ln(')} className="btn func func2">ln</button>
+                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'ln(')} className="btn func func2 sm-font">ln</button>
                         </> }
                         { this.state.twoFunc && <>
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'e')} className="btn func func2 sm-font">e</button>
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'E')} className="btn func func2 sm-font">E</button>
+                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '10^')} className="btn func func2 sm-font">10<sup>x</sup></button>
+                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'e^')} className="btn func func2 sm-font">e<sup>x</sup></button>
                         </>}
                         <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '(')} className="btn func func2 sm-font">(</button>
                         <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ')')} className="btn func func2 sm-font">)</button>
@@ -393,10 +480,10 @@ export class App extends React.Component<AppProp, AppState> {
                             onMouseDown={this.input.bind(this, '(')} className="btn func"
                             >(</button>
                         <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ')')} className="btn func">)</button>
-                        <button onMouseUp={this.inputUp.bind(this)} className="btn func">mc</button>
-                        <button onMouseUp={this.inputUp.bind(this)} className="btn func">m+</button>
-                        <button onMouseUp={this.inputUp.bind(this)} className="btn func">m-</button>
-                        <button onMouseUp={this.inputUp.bind(this)} className="btn func">mr</button>
+                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'memclear')} className="btn func">mc</button>
+                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'memadd')} className="btn func">m+</button>
+                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'memsub')} className="btn func">m-</button>
+                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'mem')} className="btn func">mr</button>
                     
                         <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '! ')} className="btn func func2">!</button>
 
@@ -411,7 +498,7 @@ export class App extends React.Component<AppProp, AppState> {
                         <button {...disabledExp} onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '^(2)')} className="btn func">x<sup>2</sup></button>
                         <button {...disabledExp} onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '^(3)')} className="btn func">x<sup>3</sup></button>
                         <button {...disabledExp} onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' ^ ')} className="btn func">x<sup>y</sup></button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'e ^ ')} className="btn func">e<sup>x</sup></button>
+                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'e^')} className="btn func">e<sup>x</sup></button>
                         { !this.state.twoFunc && 
                             <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '10^')} className="btn func">10<sup>x</sup></button>
                         }
@@ -443,7 +530,7 @@ export class App extends React.Component<AppProp, AppState> {
                             <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '√(')} className="btn func func2">√</button>
                         }
                         { this.state.twoFunc && 
-                            <button {...disabledExp} onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '^(2)')} className="btn func func2">x<sup>2</sup></button>
+                            <button {...disabledExp} onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '^(2)')} className="btn func func2 sm-font">x<sup>2</sup></button>
                         }
 
                         <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '4')} className="btn">4</button>

@@ -18,6 +18,11 @@ export function closeBracket(input: string) {
 }
 
 export function formatNumber(input: string) {
+    let numberInput = Number(input)
+    if (numberInput < 1e-99 && numberInput > -1e-99) {
+        return '0';
+    }
+
     let inputs = input.split('.');
     if (inputs[0]) {
         let number = inputs[0];

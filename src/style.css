@@ -41,6 +41,7 @@ body {
     align-items: flex-end;
     flex-direction: column;
     margin: 8px;
+    width: 100%;
 }
 
 .wrap-input .answer {
@@ -48,6 +49,13 @@ body {
     font-size: 150%;
     line-height: 1em;
     word-break: break-all;
+}
+
+.wrap-input .mem {
+    color: #26a69a;
+    font-size: 50%;
+    text-align: left;
+    width: 100%;
 }
 
 .wrap-input .input {

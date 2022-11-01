@@ -123,6 +123,10 @@ body {
     transform: translateY(1px);
 }
 
+.wrap-operator .row > .btn:disabled {
+    color: #333 !important;
+}
+
 .wrap-operator .row > .btn.ops:active {
     background-color: #78a3cd;
 }

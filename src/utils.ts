@@ -16,3 +16,19 @@ export function closeBracket(input: string) {
     console.log('input', input);
     return input;
 }
+
+export function formatNumber(input: string) {
+    let inputs = input.split('.');
+    if (inputs[0]) {
+        let number = inputs[0];
+        number = new Intl.NumberFormat('en-EN').format(Number(number));
+        number = number.replace(/,/g, ' ');
+
+        if (inputs.length == 2) {
+            return number + '.' + inputs[1];
+        } else {
+            return number;
+        }
+    }
+    return inputs.join('.');
+}

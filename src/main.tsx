@@ -9,7 +9,7 @@ import Div100vh from 'react-div-100vh';
 // import 'hack';
 import './style.css';
 import './media.css';
-import { closeBracket } from "./utils";
+import { closeBracket, formatNumber } from "./utils";
 
 export interface AppProp {
 
@@ -19,6 +19,8 @@ export interface AppState {
     input: string
     isCal: boolean
     twoFunc: boolean
+    resize: boolean
+    exp: boolean
 }
 
 export interface History {
@@ -49,6 +51,7 @@ export class App extends React.Component<AppProp, AppState> {
     refOp: React.RefObject<HTMLDivElement>;
     refCo: React.RefObject<HTMLDivElement>;
     history: History[];
+    lastAns: string;
 
     constructor(props: AppProp) {
         super(props);
@@ -59,7 +62,10 @@ export class App extends React.Component<AppProp, AppState> {
             input: '',
             isCal: false,
             twoFunc: false,
+            resize: false,
+            exp: false,
         };
+        this.lastAns = '0';
     }
 
     calWidth = () => {
@@ -94,53 +100,125 @@ export class App extends React.Component<AppProp, AppState> {
         document.addEventListener("orientationchange", (e) => {  
             // location.reload();
             this.calWidth();
-            this.forceUpdate();
+            this.setState({
+                resize: true,
+            });
         });
         window.onorientationchange = () => {
             // location.reload();
             this.calWidth();
-            this.forceUpdate();
+            this.setState({
+                resize: true,
+            });
         }
         window.addEventListener('resize', (e) => {  
             // location.reload();
             this.calWidth();
-            this.forceUpdate();
+            this.setState({
+                resize: true,
+            });
         });
         if (screen && screen.orientation) {
             screen.orientation.addEventListener('change', () => {
                 // location.reload();
                 this.calWidth();
-                this.forceUpdate();
+                this.setState({
+                    resize: true,
+                });
             });
         }
         this.calWidth();
     }
 
-    
+    isExp = (input: string) => {
+        input = input.trim();
+        let last1char = input.substring(input.length - 1);
+        let last4char = input.substring(input.length - 4);
+        let last5char = input.substring(input.length - 5);
+        if (last1char == '^') {
+            return true;
+        }
+        if (last5char == '^(-1)') {
+            return true;
+        } 
+        if (last4char == '^(2)' || last4char == '^(3)') {
+            return true;
+        } 
+        return false;
+    }
 
     input = (btn : string, event: React.MouseEventHandler<HTMLElement>) => {
         this.setState((prevState) => {
+            let isEqualBtn = btn.trim() == "=";
             if (btn == 'AC') {
                 return {
+                    resize: false,
                     input: '',
                     isCal: false,
+                    exp: false,
                 }
             }
             if (btn == 'DEL') {
+                console.log('input = \'' + prevState.input + '\'')
                 let removeChar = 1;
                 if (prevState.input[prevState.input.length - 1] == ' ') {
                     removeChar = 2;
                 }
+                let last3char = prevState.input.substring(prevState.input.length - 3);
+                let last4char = prevState.input.substring(prevState.input.length - 4);
+                let last5char = prevState.input.substring(prevState.input.length - 5);
+                let last6char = prevState.input.substring(prevState.input.length - 6);
+                if (last4char =='sin(' || last4char == 'cos(' || last4char == 'tan(') {
+                    removeChar = 4;
+                }
+                if (last5char == 'sinh(' || last5char == 'cosh(' || last5char == 'tanh(' || 
+                    last5char == 'asin(' || last5char == 'acos(' || last5char == 'atan(') {
+                    removeChar = 5;
+                }
+                if (last6char =='asinh(' || last6char == 'acosh(' || last6char == 'atanh(') {
+                    removeChar = 6;
+                }
+                if (last3char == 'ln(') {
+                    removeChar = 3;
+                } 
+                if (last5char == 'log2(') {
+                    removeChar = 5;
+                } 
+                if (last6char == 'log10(') {
+                    removeChar = 6;
+                }
+                if (last5char == '^(-1)') {
+                    removeChar = 5;
+                } 
+                if (last4char == '^(2)' || last4char == '^(3)') {
+                    removeChar = 4;
+                } 
                 let newInput = prevState.input.substring(0, prevState.input.length - removeChar);
                 newInput = newInput.trim();
                 return {
+                    resize: false,
                     input: newInput,
                     isCal: false,
+                    exp: this.isExp(newInput),
                 }
             }
-            if (this.isFuncBtn(btn) && (prevState.isCal || prevState.input == '')) {
-                btn = 'ans' + btn;
+            if (isEqualBtn && prevState.input.search('ans') != -1) {
+                return {
+                    resize: false,
+                    input: prevState.input,
+                    isCal: isEqualBtn,
+                    exp: this.isExp(prevState.input),
+                }
             }
+            
+            if (isEqualBtn && prevState.isCal) {
+                return {};
+            }
+
+            if (this.isFuncBtn(btn) && (prevState.isCal || prevState.input == '')) {
+                btn = this.lastAns + btn;
+            }
+
             let newInput = prevState.input;
             if (prevState.isCal) {
                 newInput = btn;
@@ -148,8 +226,10 @@ export class App extends React.Component<AppProp, AppState> {
                 newInput += btn;
             }
             return {
+                resize: false,
                 input: newInput,
-                isCal: (btn == ' ='),
+                isCal: isEqualBtn,
+                exp: this.isExp(newInput),
             };
         });
         let target = event.target as HTMLElement;
@@ -163,9 +243,9 @@ export class App extends React.Component<AppProp, AppState> {
 
     isFuncBtn = (btn: string) => {
         btn = btn.trim();
-        if (btn == '*' || btn == '-' || btn == '+' || btn == '÷'
-        || btn == '%' || btn == '^' || btn == '^ (2)' || btn == '^ (3)' 
-        ||  btn == '^ (-1)' || btn == '^ (1/' || btn == '!' || btn == '/') {
+        if (btn == '×' || btn == '+' || btn == '÷'
+        || btn == '%' || btn == '^' || btn == '^(2)' || btn == '^(3)' 
+        ||  btn == '^(-1)' || btn == '^ (1/' || btn == '!' || btn == '/') {
             return true;
         }
         return false;
@@ -199,6 +279,9 @@ export class App extends React.Component<AppProp, AppState> {
     }
     
     getAnsStr = () => {
+        if (this.state.resize) {
+            return this.lastAns;
+        }
         try {
             let evalution = closeBracket(this.inputToEval(this.state.input));
             console.log('evalution', evalution);
@@ -211,9 +294,12 @@ export class App extends React.Component<AppProp, AppState> {
                 return '0';
             }
             parser.evaluate('ans = ' + ansStr);
+            ansStr = formatNumber(ansStr);
+            this.lastAns = ansStr;
             return ansStr;
         } catch(e) {
             console.error(e);
+            this.lastAns = 'Parse error';
             return 'Parse error';
         }
         
@@ -228,11 +314,15 @@ export class App extends React.Component<AppProp, AppState> {
     }
 
     displayInput = (input: string) => {
+        input = input || '0';
+        if (input.trim() == '=') {
+            return '';
+        }
         input = input.replace(/log10/g, 'log<sub>10</sub>');
         input = input.replace(/log2/g, 'log<sub>2</sub>');
-        input = input.replace(/ \^ \(-1\)/g, '<sup>-1</sup>');
-        input = input.replace(/ \^ \(2\)/g, '<sup>2</sup>');
-        input = input.replace(/ \^ \(3\)/g, '<sup>3</sup>');
+        input = input.replace(/\^\(-1\)/g, '<sup>-1</sup>');
+        input = input.replace(/\^\(2\)/g, '<sup>2</sup>');
+        input = input.replace(/\^\(3\)/g, '<sup>3</sup>');
 
         input = input.replace(/asin\(/g, 'sin<sup>-1</sup>(');
         input = input.replace(/acos\(/g, 'cos<sup>-1</sup>(');
@@ -245,18 +335,24 @@ export class App extends React.Component<AppProp, AppState> {
     }
 
     render() {
+        let disabledExp = {};
+        if (this.state.exp) {
+            disabledExp = {
+                disabled: 'disabled'
+            }
+        }
         return <Div100vh>
             <div className="wrap-container" ref={this.refCo}>
                 <div className="wrap-input">
                     <div className="item">
                         { this.state.isCal && <>
                                 <div className="input"
-                                    dangerouslySetInnerHTML={{ __html: this.displayInput(this.state.input || '0') }}></div>
+                                    dangerouslySetInnerHTML={{ __html: this.displayInput(this.state.input) }}></div>
                                 <div className="answer">{this.getAnsStr()}</div>
                             </>
                         }
                         {!this.state.isCal && <div className="answer" 
-                            dangerouslySetInnerHTML={{ __html: this.displayInput(this.state.input || '0') }}></div>
+                            dangerouslySetInnerHTML={{ __html: this.displayInput(this.state.input) }}></div>
                         }
                     </div>
                 </div>
@@ -273,12 +369,12 @@ export class App extends React.Component<AppProp, AppState> {
                             <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'atan(')} className="btn func func2 sm-font">tan<sup>-1</sup></button>
                         </>}
                         <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '°')} className="btn func func2">°</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' ^ -1')} className="btn func func2">x<sup>-1</sup></button>
+                        <button {...disabledExp} onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '^(-1)')} className="btn func func2">x<sup>-1</sup></button>
                     </div>
                     <div className="row">
                         { !this.state.twoFunc && <>
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' log10(')} className="btn func func2 sm-font">log<sub>10</sub></button>
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' ln(')} className="btn func func2">ln</button>
+                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'log10(')} className="btn func func2 sm-font">log<sub>10</sub></button>
+                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'ln(')} className="btn func func2">ln</button>
                         </> }
                         { this.state.twoFunc && <>
                             <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'e')} className="btn func func2 sm-font">e</button>
@@ -306,24 +402,24 @@ export class App extends React.Component<AppProp, AppState> {
 
                         <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'AC')} className="sys btn sm-font">AC</button>
                         <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'DEL')} className="sys btn sm-font">DEL</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '%')} className="sys btn">%</button>
+                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '%')} className="sys btn sm-font">%</button>
                         <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' ÷ ')} className="ops btn">÷</button>
                     </div>
                     <div className="row">
                         <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.toggleTwofunc} 
                             className={this.state.twoFunc ? 'btn btn-enable func sm-font' : 'btn func sm-font'}>inv</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' ^ (2)')} className="btn func">x<sup>2</sup></button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' ^ (3)')} className="btn func">x<sup>3</sup></button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' ^ ')} className="btn func">x<sup>y</sup></button>
+                        <button {...disabledExp} onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '^(2)')} className="btn func">x<sup>2</sup></button>
+                        <button {...disabledExp} onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '^(3)')} className="btn func">x<sup>3</sup></button>
+                        <button {...disabledExp} onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' ^ ')} className="btn func">x<sup>y</sup></button>
                         <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'e ^ ')} className="btn func">e<sup>x</sup></button>
                         { !this.state.twoFunc && 
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '10 ^ ')} className="btn func">10<sup>x</sup></button>
+                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '10^')} className="btn func">10<sup>x</sup></button>
                         }
                         { this.state.twoFunc && 
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '2 ^ ')} className="btn func">2<sup>x</sup></button>
+                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '2^')} className="btn func">2<sup>x</sup></button>
                         }
 
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' ^ ')} className="btn func func2">^</button>
+                        <button {...disabledExp} onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' ^ ')} className="btn func func2">^</button>
 
                         <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '7')} className="btn">7</button>
                         <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '8')} className="btn">8</button>
@@ -331,23 +427,23 @@ export class App extends React.Component<AppProp, AppState> {
                         <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' × ')} className="btn ops">×</button>
                     </div>
                     <div className="row">
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' ^ (-1)')} className="btn func">x<sup>-1</sup></button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' √(')} className="btn func">√</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' ∛(')} className="btn func">∛</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' ^ (1/')} className="btn func">y√x</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' ln(')} className="btn func">ln</button>
+                        <button {...disabledExp} onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '^(-1)')} className="btn func">x<sup>-1</sup></button>
+                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '√(')} className="btn func">√</button>
+                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '∛(')} className="btn func">∛</button>
+                        <button {...disabledExp} onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' ^ (1/')} className="btn func">y√x</button>
+                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'ln(')} className="btn func">ln</button>
                         { !this.state.twoFunc && 
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' log10(')} className="btn func sm-font">log<sub>10</sub></button>
+                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'log10(')} className="btn func sm-font">log<sub>10</sub></button>
                         }
                         { this.state.twoFunc && 
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' log2(')} className="btn func sm-font">log<sub>2</sub></button>
+                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'log2(')} className="btn func sm-font">log<sub>2</sub></button>
                         }
 
                         { !this.state.twoFunc && 
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' √(')} className="btn func func2">√</button>
+                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '√(')} className="btn func func2">√</button>
                         }
                         { this.state.twoFunc && 
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' ^ 2')} className="btn func func2">x<sup>2</sup></button>
+                            <button {...disabledExp} onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '^(2)')} className="btn func func2">x<sup>2</sup></button>
                         }
 
                         <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '4')} className="btn">4</button>

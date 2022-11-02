@@ -3,7 +3,7 @@
     "name": "New PWA Calculator",
     "icons": [
       {
-        "src": "./icon/calc.png",
+        "src": "./icons/calc.png",
         "type": "image/png",
         "sizes": "1024x1024"
       }
@@ -20,7 +20,7 @@
         "short_name": "Calc",
         "description": "PWA Calculator",
         "url": "./index.html",
-        "icons": [{ "src": "./images/calc.png", "sizes": "1024x1024" }]
+        "icons": [{ "src": "./icons/calc.png", "sizes": "1024x1024" }]
       }
     ],
     "description": "New PWA Calculator"

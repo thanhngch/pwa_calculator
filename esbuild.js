@@ -12,5 +12,6 @@ esbuild.build({
     preserveSymlinks: true,
     incremental: true,
     external: [
+        '/icons/*'
     ],
 });

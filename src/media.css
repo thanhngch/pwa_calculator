@@ -30,7 +30,7 @@
 
 @media only screen and (max-width: 300px) {
     body {
-        font-size: 1em;
+        font-size: 1.4em;
     }
     .func2 {
         display: none !important;

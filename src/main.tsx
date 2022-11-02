@@ -488,7 +488,7 @@ export class App extends React.Component<AppProp, AppState> {
                         <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '! ')} className="btn func func2">!</button>
 
                         <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'AC')} className="sys btn sm-font">AC</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'DEL')} className="sys btn sm-font">DEL</button>
+                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'DEL')} className="sys btn sm-font delete">DEL</button>
                         <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '%')} className="sys btn sm-font">%</button>
                         <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' ÷ ')} className="ops btn">÷</button>
                     </div>

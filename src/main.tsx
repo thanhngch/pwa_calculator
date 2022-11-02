@@ -446,141 +446,141 @@ export class App extends React.Component<AppProp, AppState> {
                 <div className="wrap-operator noselect" ref={this.refOp}>
                     <div className="row">
                         { !this.state.twoFunc && <>
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'sin(')} className="btn func func2 sm-font">sin</button>
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'cos(')} className="btn func func2 sm-font">cos</button>
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'tan(')} className="btn func func2 sm-font">tan</button>
+                            <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'sin(')} className="btn func func2 sm-font">sin</button>
+                            <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'cos(')} className="btn func func2 sm-font">cos</button>
+                            <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'tan(')} className="btn func func2 sm-font">tan</button>
                         </> }
                         { this.state.twoFunc && <>
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'asin(')} className="btn func func2 sm-font">sin<sup>-1</sup></button>
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'acos(')} className="btn func func2 sm-font">cos<sup>-1</sup></button>
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'atan(')} className="btn func func2 sm-font">tan<sup>-1</sup></button>
+                            <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'asin(')} className="btn func func2 sm-font">sin<sup>-1</sup></button>
+                            <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'acos(')} className="btn func func2 sm-font">cos<sup>-1</sup></button>
+                            <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'atan(')} className="btn func func2 sm-font">tan<sup>-1</sup></button>
                         </>}
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '°')} className="btn func func2">°</button>
-                        <button {...disabledExp} onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '^(-1)')} className="btn func func2 sm-font">x<sup>-1</sup></button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '°')} className="btn func func2">°</button>
+                        <button {...disabledExp} onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '^(-1)')} className="btn func func2 sm-font">x<sup>-1</sup></button>
                     </div>
                     <div className="row">
                         { !this.state.twoFunc && <>
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'log10(')} className="btn func func2 sm-font">log<sub>10</sub></button>
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'ln(')} className="btn func func2 sm-font">ln</button>
+                            <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'log10(')} className="btn func func2 sm-font">log<sub>10</sub></button>
+                            <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'ln(')} className="btn func func2 sm-font">ln</button>
                         </> }
                         { this.state.twoFunc && <>
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '10^')} className="btn func func2 sm-font">10<sup>x</sup></button>
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'e^')} className="btn func func2 sm-font">e<sup>x</sup></button>
+                            <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '10^')} className="btn func func2 sm-font">10<sup>x</sup></button>
+                            <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'e^')} className="btn func func2 sm-font">e<sup>x</sup></button>
                         </>}
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '(')} className="btn func func2 sm-font">(</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ')')} className="btn func func2 sm-font">)</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.toggleTwofunc} 
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '(')} className="btn func func2 sm-font">(</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, ')')} className="btn func func2 sm-font">)</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.toggleTwofunc} 
                             className={this.state.twoFunc ? 'btn btn-enable func func2 sm-font' : 'btn func func2 sm-font'}>inv</button>
                         
                         
                     </div>
                     <div className="row">
                         <button 
-                            onMouseUp={this.inputUp.bind(this)} 
-                            onMouseDown={this.input.bind(this, '(')} className="btn func"
+                            onTouchEnd={this.inputUp.bind(this)} 
+                            onTouchStart={this.input.bind(this, '(')} className="btn func"
                             >(</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ')')} className="btn func">)</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'memclear')} className="btn func">mc</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'memadd')} className="btn func">m+</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'memsub')} className="btn func">m-</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'mem')} className="btn func">mr</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, ')')} className="btn func">)</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'memclear')} className="btn func">mc</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'memadd')} className="btn func">m+</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'memsub')} className="btn func">m-</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'mem')} className="btn func">mr</button>
                     
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '! ')} className="btn func func2">!</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '! ')} className="btn func func2">!</button>
 
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'AC')} className="sys btn sm-font">AC</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'DEL')} className="sys btn sm-font delete">DEL</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '%')} className="sys btn sm-font">%</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' ÷ ')} className="ops btn">÷</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'AC')} className="sys btn sm-font">AC</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'DEL')} className="sys btn sm-font delete">DEL</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '%')} className="sys btn sm-font">%</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, ' ÷ ')} className="ops btn">÷</button>
                     </div>
                     <div className="row">
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.toggleTwofunc} 
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.toggleTwofunc} 
                             className={this.state.twoFunc ? 'btn btn-enable func sm-font' : 'btn func sm-font'}>inv</button>
-                        <button {...disabledExp} onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '^(2)')} className="btn func">x<sup>2</sup></button>
-                        <button {...disabledExp} onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '^(3)')} className="btn func">x<sup>3</sup></button>
-                        <button {...disabledExp} onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' ^ ')} className="btn func">x<sup>y</sup></button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'e^')} className="btn func">e<sup>x</sup></button>
+                        <button {...disabledExp} onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '^(2)')} className="btn func">x<sup>2</sup></button>
+                        <button {...disabledExp} onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '^(3)')} className="btn func">x<sup>3</sup></button>
+                        <button {...disabledExp} onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, ' ^ ')} className="btn func">x<sup>y</sup></button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'e^')} className="btn func">e<sup>x</sup></button>
                         { !this.state.twoFunc && 
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '10^')} className="btn func">10<sup>x</sup></button>
+                            <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '10^')} className="btn func">10<sup>x</sup></button>
                         }
                         { this.state.twoFunc && 
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '2^')} className="btn func">2<sup>x</sup></button>
+                            <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '2^')} className="btn func">2<sup>x</sup></button>
                         }
 
-                        <button {...disabledExp} onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' ^ ')} className="btn func func2">^</button>
+                        <button {...disabledExp} onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, ' ^ ')} className="btn func func2">^</button>
 
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '7')} className="btn">7</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '8')} className="btn">8</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '9')} className="btn">9</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' × ')} className="btn ops">×</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '7')} className="btn">7</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '8')} className="btn">8</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '9')} className="btn">9</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, ' × ')} className="btn ops">×</button>
                     </div>
                     <div className="row">
-                        <button {...disabledExp} onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '^(-1)')} className="btn func">x<sup>-1</sup></button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '√(')} className="btn func">√</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '∛(')} className="btn func">∛</button>
-                        <button {...disabledExp} onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' ^ (1/')} className="btn func">y√x</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'ln(')} className="btn func">ln</button>
+                        <button {...disabledExp} onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '^(-1)')} className="btn func">x<sup>-1</sup></button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '√(')} className="btn func">√</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '∛(')} className="btn func">∛</button>
+                        <button {...disabledExp} onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, ' ^ (1/')} className="btn func">y√x</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'ln(')} className="btn func">ln</button>
                         { !this.state.twoFunc && 
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'log10(')} className="btn func sm-font">log<sub>10</sub></button>
+                            <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'log10(')} className="btn func sm-font">log<sub>10</sub></button>
                         }
                         { this.state.twoFunc && 
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'log2(')} className="btn func sm-font">log<sub>2</sub></button>
+                            <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'log2(')} className="btn func sm-font">log<sub>2</sub></button>
                         }
 
                         { !this.state.twoFunc && 
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '√(')} className="btn func func2">√</button>
+                            <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '√(')} className="btn func func2">√</button>
                         }
                         { this.state.twoFunc && 
-                            <button {...disabledExp} onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '^(2)')} className="btn func func2 sm-font">x<sup>2</sup></button>
+                            <button {...disabledExp} onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '^(2)')} className="btn func func2 sm-font">x<sup>2</sup></button>
                         }
 
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '4')} className="btn">4</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '5')} className="btn">5</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '6')} className="btn">6</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' - ')} className="btn ops">-</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '4')} className="btn">4</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '5')} className="btn">5</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '6')} className="btn">6</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, ' - ')} className="btn ops">-</button>
                     </div>
                     <div className="row">
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '!')} className="btn func">x!</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '!')} className="btn func">x!</button>
                         { !this.state.twoFunc && <>
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'sin(')} className="btn func sm-font">sin</button>
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'cos(')} className="btn func sm-font">cos</button>
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'tan(')} className="btn func sm-font">tan</button>
+                            <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'sin(')} className="btn func sm-font">sin</button>
+                            <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'cos(')} className="btn func sm-font">cos</button>
+                            <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'tan(')} className="btn func sm-font">tan</button>
                         </> }
                         { this.state.twoFunc && <>
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'asin(')} className="btn func sm-font">sin<sup>-1</sup></button>
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'acos(')} className="btn func sm-font">cos<sup>-1</sup></button>
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'atan(')} className="btn func sm-font">tan<sup>-1</sup></button>
+                            <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'asin(')} className="btn func sm-font">sin<sup>-1</sup></button>
+                            <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'acos(')} className="btn func sm-font">cos<sup>-1</sup></button>
+                            <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'atan(')} className="btn func sm-font">tan<sup>-1</sup></button>
                         </>}
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'e')} className="btn func">e</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'E')} className="btn func">E</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'e')} className="btn func">e</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'E')} className="btn func">E</button>
 
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'π')} className="btn func func2">π</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'π')} className="btn func func2">π</button>
 
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '1')} className="btn">1</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '2')} className="btn">2</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '3')} className="btn">3</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' + ')} className="btn ops">+</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '1')} className="btn">1</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '2')} className="btn">2</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '3')} className="btn">3</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, ' + ')} className="btn ops">+</button>
                     </div>
                     <div className="row">
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '/')} className="btn func">/</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '/')} className="btn func">/</button>
                         { !this.state.twoFunc && <>
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'sinh(')} className="btn func sm-font">sinh</button>
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'cosh(')} className="btn func sm-font">cosh</button>
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'tanh(')} className="btn func sm-font">tanh</button>
+                            <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'sinh(')} className="btn func sm-font">sinh</button>
+                            <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'cosh(')} className="btn func sm-font">cosh</button>
+                            <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'tanh(')} className="btn func sm-font">tanh</button>
                         </>}
                         { this.state.twoFunc && <>
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'asinh(')} className="btn func sm-font">sinh<sup>-1</sup></button>
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'acosh(')} className="btn func sm-font">cosh<sup>-1</sup></button>
-                            <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'atanh(')} className="btn func sm-font">tanh<sup>-1</sup></button>
+                            <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'asinh(')} className="btn func sm-font">sinh<sup>-1</sup></button>
+                            <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'acosh(')} className="btn func sm-font">cosh<sup>-1</sup></button>
+                            <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'atanh(')} className="btn func sm-font">tanh<sup>-1</sup></button>
                         </>}
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'π')} className="btn func">π</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '°')} className="btn func">°</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'π')} className="btn func">π</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '°')} className="btn func">°</button>
 
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'e')} className="btn func func2">e</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'e')} className="btn func func2">e</button>
 
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '0')} className="btn">0</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, '.')} className="btn">.</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, 'ans')} className="btn sm-font">ans</button>
-                        <button onMouseUp={this.inputUp.bind(this)} onMouseDown={this.input.bind(this, ' =')} className="btn ops">=</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '0')} className="btn">0</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '.')} className="btn">.</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'ans')} className="btn sm-font">ans</button>
+                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, ' =')} className="btn ops">=</button>
                     </div>
                 </div>
             </div>

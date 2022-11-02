@@ -8,11 +8,10 @@
         "sizes": "1024x1024"
       }
     ],
-    "id": "new.pwa.cal",
+    "id": "docs/index.html",
     "start_url": "./index.html",
     "background_color": "#3367D6",
     "display": "standalone",
-    "scope": "/docs",
     "theme_color": "#161616",
     "shortcuts": [
       {

@@ -2,12 +2,12 @@
   "name": "universal_calculator",
   "description": "universal calculator",
   "version": "1.0.0",
-  "main": "public/main.js",
+  "main": "docs/main.js",
   "license": "MIT",
   "scripts": {
     "build": "node ./esbuild.js",
-    "start": "http-server ./public -s -c-1 -p 5022 2> /dev/null",
-    "serve": "sirv ./public -s -D --port 8888"
+    "start": "http-server ./docs -s -c-1 -p 5022 2> /dev/null",
+    "serve": "sirv ./docs -s -D --port 8888"
   },
   "dependencies": {
   },

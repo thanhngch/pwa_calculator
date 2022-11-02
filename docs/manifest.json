@@ -12,8 +12,8 @@
     "start_url": "./index.html",
     "background_color": "#3367D6",
     "display": "standalone",
-    "scope": "/",
-    "theme_color": "#3367D6",
+    "scope": "/docs",
+    "theme_color": "#161616",
     "shortcuts": [
       {
         "name": "Calculator",

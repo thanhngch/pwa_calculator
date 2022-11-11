@@ -6,7 +6,7 @@ esbuild.build({
     minify: false,
     sourcemap: true,
     target: ['chrome70'],
-    outfile: 'public/js/out.js',
+    outfile: 'docs/js/out.js',
     logLevel: 'info',
     watch: true,
     preserveSymlinks: true,

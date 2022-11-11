@@ -22,6 +22,9 @@ export function formatNumber(input: string) {
     if (numberInput < 1e-99 && numberInput > -1e-99) {
         return '0';
     }
+    if (input.indexOf('e') != -1 || input.indexOf('E') != -1) {
+        return input;
+    }
 
     let inputs = input.split('.');
     if (inputs[0]) {

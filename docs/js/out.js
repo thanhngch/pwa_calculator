@@ -62861,6 +62861,9 @@
     if (numberInput < 1e-99 && numberInput > -1e-99) {
       return "0";
     }
+    if (input.indexOf("e") != -1 || input.indexOf("E") != -1) {
+      return input;
+    }
     let inputs = input.split(".");
     if (inputs[0]) {
       let number = inputs[0];
@@ -62885,7 +62888,7 @@
   });
   var parser = math.parser();
   parser.evaluate("sqrt3(x) = x ^ (1/3)");
-  parser.evaluate("ln(x) = log2(x)");
+  parser.evaluate("ln(x) = log(x)");
   parser.evaluate("ans = 0");
   parser.evaluate("mem = 0");
   parser.evaluate("add(x) = mem + x");
@@ -63110,6 +63113,8 @@
             evaluation += " deg ";
           } else if (char == "\u03C0") {
             evaluation += " pi ";
+          } else if (char == "E") {
+            evaluation += " *10^ ";
           } else if (char == "=") {
             evaluation += "";
           } else {
@@ -63252,340 +63257,344 @@
       }, /* @__PURE__ */ React2.createElement("div", {
         className: "row"
       }, !this.state.twoFunc && /* @__PURE__ */ React2.createElement(React2.Fragment, null, /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "sin("),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "sin("),
         className: "btn func func2 sm-font"
       }, "sin"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "cos("),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "cos("),
         className: "btn func func2 sm-font"
       }, "cos"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "tan("),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "tan("),
         className: "btn func func2 sm-font"
       }, "tan")), this.state.twoFunc && /* @__PURE__ */ React2.createElement(React2.Fragment, null, /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "asin("),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "asin("),
         className: "btn func func2 sm-font"
       }, "sin", /* @__PURE__ */ React2.createElement("sup", null, "-1")), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "acos("),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "acos("),
         className: "btn func func2 sm-font"
       }, "cos", /* @__PURE__ */ React2.createElement("sup", null, "-1")), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "atan("),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "atan("),
         className: "btn func func2 sm-font"
       }, "tan", /* @__PURE__ */ React2.createElement("sup", null, "-1"))), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "\xB0"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "\xB0"),
         className: "btn func func2"
       }, "\xB0"), /* @__PURE__ */ React2.createElement("button", {
         ...disabledExp,
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "^(-1)"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "^(-1)"),
         className: "btn func func2 sm-font"
       }, "x", /* @__PURE__ */ React2.createElement("sup", null, "-1"))), /* @__PURE__ */ React2.createElement("div", {
         className: "row"
       }, !this.state.twoFunc && /* @__PURE__ */ React2.createElement(React2.Fragment, null, /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "log10("),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "log10("),
         className: "btn func func2 sm-font"
       }, "log", /* @__PURE__ */ React2.createElement("sub", null, "10")), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "ln("),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "ln("),
         className: "btn func func2 sm-font"
       }, "ln")), this.state.twoFunc && /* @__PURE__ */ React2.createElement(React2.Fragment, null, /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "10^"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "10^"),
         className: "btn func func2 sm-font"
       }, "10", /* @__PURE__ */ React2.createElement("sup", null, "x")), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "e^"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "e^"),
         className: "btn func func2 sm-font"
       }, "e", /* @__PURE__ */ React2.createElement("sup", null, "x"))), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "("),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "("),
         className: "btn func func2 sm-font"
       }, "("), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, ")"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, ")"),
         className: "btn func func2 sm-font"
       }, ")"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.toggleTwofunc,
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.toggleTwofunc,
         className: this.state.twoFunc ? "btn btn-enable func func2 sm-font" : "btn func func2 sm-font"
       }, "inv")), /* @__PURE__ */ React2.createElement("div", {
         className: "row"
       }, /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "("),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "("),
         className: "btn func"
       }, "("), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, ")"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, ")"),
         className: "btn func"
       }, ")"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "memclear"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "memclear"),
         className: "btn func"
       }, "mc"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "memadd"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "memadd"),
         className: "btn func"
       }, "m+"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "memsub"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "memsub"),
         className: "btn func"
       }, "m-"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "mem"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "mem"),
         className: "btn func"
       }, "mr"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "! "),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "! "),
         className: "btn func func2"
       }, "!"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "AC"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "AC"),
         className: "sys btn sm-font"
       }, "AC"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "DEL"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "DEL"),
         className: "sys btn sm-font delete"
       }, "DEL"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "%"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "%"),
         className: "sys btn sm-font"
       }, "%"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, " \xF7 "),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, " \xF7 "),
         className: "ops btn"
       }, "\xF7")), /* @__PURE__ */ React2.createElement("div", {
         className: "row"
       }, /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.toggleTwofunc,
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.toggleTwofunc,
         className: this.state.twoFunc ? "btn btn-enable func sm-font" : "btn func sm-font"
       }, "inv"), /* @__PURE__ */ React2.createElement("button", {
         ...disabledExp,
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "^(2)"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "^(2)"),
         className: "btn func"
       }, "x", /* @__PURE__ */ React2.createElement("sup", null, "2")), /* @__PURE__ */ React2.createElement("button", {
         ...disabledExp,
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "^(3)"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "^(3)"),
         className: "btn func"
       }, "x", /* @__PURE__ */ React2.createElement("sup", null, "3")), /* @__PURE__ */ React2.createElement("button", {
         ...disabledExp,
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, " ^ "),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, " ^ "),
         className: "btn func"
       }, "x", /* @__PURE__ */ React2.createElement("sup", null, "y")), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "e^"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "e^"),
         className: "btn func"
       }, "e", /* @__PURE__ */ React2.createElement("sup", null, "x")), !this.state.twoFunc && /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "10^"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "10^"),
         className: "btn func"
       }, "10", /* @__PURE__ */ React2.createElement("sup", null, "x")), this.state.twoFunc && /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "2^"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "2^"),
         className: "btn func"
       }, "2", /* @__PURE__ */ React2.createElement("sup", null, "x")), /* @__PURE__ */ React2.createElement("button", {
         ...disabledExp,
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, " ^ "),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, " ^ "),
         className: "btn func func2"
       }, "^"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "7"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "7"),
         className: "btn"
       }, "7"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "8"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "8"),
         className: "btn"
       }, "8"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "9"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "9"),
         className: "btn"
       }, "9"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, " \xD7 "),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, " \xD7 "),
         className: "btn ops"
       }, "\xD7")), /* @__PURE__ */ React2.createElement("div", {
         className: "row"
       }, /* @__PURE__ */ React2.createElement("button", {
         ...disabledExp,
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "^(-1)"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "^(-1)"),
         className: "btn func"
       }, "x", /* @__PURE__ */ React2.createElement("sup", null, "-1")), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "\u221A("),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "\u221A("),
         className: "btn func"
       }, "\u221A"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "\u221B("),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "\u221B("),
         className: "btn func"
       }, "\u221B"), /* @__PURE__ */ React2.createElement("button", {
         ...disabledExp,
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, " ^ (1/"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, " ^ (1/"),
         className: "btn func"
       }, "y\u221Ax"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "ln("),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "ln("),
         className: "btn func"
       }, "ln"), !this.state.twoFunc && /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "log10("),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "log10("),
         className: "btn func sm-font"
       }, "log", /* @__PURE__ */ React2.createElement("sub", null, "10")), this.state.twoFunc && /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "log2("),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "log2("),
         className: "btn func sm-font"
       }, "log", /* @__PURE__ */ React2.createElement("sub", null, "2")), !this.state.twoFunc && /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "\u221A("),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "\u221A("),
         className: "btn func func2"
       }, "\u221A"), this.state.twoFunc && /* @__PURE__ */ React2.createElement("button", {
         ...disabledExp,
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "^(2)"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "^(2)"),
         className: "btn func func2 sm-font"
       }, "x", /* @__PURE__ */ React2.createElement("sup", null, "2")), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "4"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "4"),
         className: "btn"
       }, "4"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "5"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "5"),
         className: "btn"
       }, "5"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "6"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "6"),
         className: "btn"
       }, "6"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, " - "),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, " - "),
         className: "btn ops"
       }, "-")), /* @__PURE__ */ React2.createElement("div", {
         className: "row"
       }, /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "!"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "!"),
         className: "btn func"
       }, "x!"), !this.state.twoFunc && /* @__PURE__ */ React2.createElement(React2.Fragment, null, /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "sin("),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "sin("),
         className: "btn func sm-font"
       }, "sin"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "cos("),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "cos("),
         className: "btn func sm-font"
       }, "cos"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "tan("),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "tan("),
         className: "btn func sm-font"
       }, "tan")), this.state.twoFunc && /* @__PURE__ */ React2.createElement(React2.Fragment, null, /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "asin("),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "asin("),
         className: "btn func sm-font"
       }, "sin", /* @__PURE__ */ React2.createElement("sup", null, "-1")), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "acos("),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "acos("),
         className: "btn func sm-font"
       }, "cos", /* @__PURE__ */ React2.createElement("sup", null, "-1")), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "atan("),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "atan("),
         className: "btn func sm-font"
       }, "tan", /* @__PURE__ */ React2.createElement("sup", null, "-1"))), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "e"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "e"),
         className: "btn func"
       }, "e"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "E"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "E"),
         className: "btn func"
       }, "E"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "\u03C0"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "\u03C0"),
         className: "btn func func2"
       }, "\u03C0"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "1"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "1"),
         className: "btn"
       }, "1"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "2"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "2"),
         className: "btn"
       }, "2"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "3"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "3"),
         className: "btn"
       }, "3"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, " + "),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, " + "),
         className: "btn ops"
       }, "+")), /* @__PURE__ */ React2.createElement("div", {
         className: "row"
       }, /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "/"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "/"),
         className: "btn func"
       }, "/"), !this.state.twoFunc && /* @__PURE__ */ React2.createElement(React2.Fragment, null, /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "sinh("),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "sinh("),
         className: "btn func sm-font"
       }, "sinh"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "cosh("),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "cosh("),
         className: "btn func sm-font"
       }, "cosh"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "tanh("),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "tanh("),
         className: "btn func sm-font"
       }, "tanh")), this.state.twoFunc && /* @__PURE__ */ React2.createElement(React2.Fragment, null, /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "asinh("),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "asinh("),
         className: "btn func sm-font"
       }, "sinh", /* @__PURE__ */ React2.createElement("sup", null, "-1")), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "acosh("),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "acosh("),
         className: "btn func sm-font"
       }, "cosh", /* @__PURE__ */ React2.createElement("sup", null, "-1")), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "atanh("),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "atanh("),
         className: "btn func sm-font"
       }, "tanh", /* @__PURE__ */ React2.createElement("sup", null, "-1"))), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "\u03C0"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "\u03C0"),
         className: "btn func"
       }, "\u03C0"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "\xB0"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "\xB0"),
         className: "btn func"
-      }, "\xB0"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "e"),
+      }, "\xB0"), !this.state.twoFunc && /* @__PURE__ */ React2.createElement("button", {
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "E"),
+        className: "btn func func2"
+      }, "E"), this.state.twoFunc && /* @__PURE__ */ React2.createElement("button", {
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "e"),
         className: "btn func func2"
       }, "e"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "0"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "0"),
         className: "btn"
       }, "0"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "."),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "."),
         className: "btn"
       }, "."), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, "ans"),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, "ans"),
         className: "btn sm-font"
       }, "ans"), /* @__PURE__ */ React2.createElement("button", {
-        onMouseUp: this.inputUp.bind(this),
-        onMouseDown: this.input.bind(this, " ="),
+        onTouchEnd: this.inputUp.bind(this),
+        onTouchStart: this.input.bind(this, " ="),
         className: "btn ops"
       }, "=")))));
     }

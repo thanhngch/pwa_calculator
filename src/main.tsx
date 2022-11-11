@@ -38,7 +38,7 @@ const math = create(all, {
 const parser = math.parser();
 
 parser.evaluate('sqrt3(x) = x ^ (1/3)');
-parser.evaluate('ln(x) = log2(x)');
+parser.evaluate('ln(x) = log(x)');
 parser.evaluate('ans = 0');
 parser.evaluate('mem = 0');
 parser.evaluate('add(x) = mem + x');
@@ -337,6 +337,8 @@ export class App extends React.Component<AppProp, AppState> {
                 evaluation += ' deg ';
             } else if (char == 'π') {
                 evaluation += ' pi ';
+            } else if (char == 'E') {
+                evaluation += ' *10^ ';
             } else if (char == '=') {
                 evaluation += '';
             } else {
@@ -575,7 +577,12 @@ export class App extends React.Component<AppProp, AppState> {
                         <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'π')} className="btn func">π</button>
                         <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '°')} className="btn func">°</button>
 
-                        <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'e')} className="btn func func2">e</button>
+                        { !this.state.twoFunc && 
+                            <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'E')} className="btn func func2">E</button>
+                        }
+                        { this.state.twoFunc && 
+                            <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, 'e')} className="btn func func2">e</button>
+                        }
 
                         <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '0')} className="btn">0</button>
                         <button onTouchEnd={this.inputUp.bind(this)} onTouchStart={this.input.bind(this, '.')} className="btn">.</button>

@@ -86,10 +86,13 @@ body {
 .wrap-operator {
   display: flex;
   flex-direction: column;
-  width: 100vw;
+  width: calc(100vw - 20px);
   touch-action: none;
   background: #111111;
   padding-top: 10px;
+  padding-bottom: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 .wrap-operator .row {
   display: flex;

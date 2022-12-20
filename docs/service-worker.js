@@ -2,17 +2,17 @@
 
 const CACHE_NAME = 'static-cache-v2';
 const FILES_TO_CACHE = [
-  './icons/calc.ico',
-  './icons/calc.png',
-  './js/out.css',
-  './js/out.css.map',
-  './js/out.js',
-  './js/out.js.map',
-  './index.html',
-  './main.js',
-  './manifest.json',
-  './reset.css',
-  './service-worker.js'
+  // './icons/calc.ico',
+  // './icons/calc.png',
+  // './js/out.css',
+  // './js/out.css.map',
+  // './js/out.js',
+  // './js/out.js.map',
+  // './index.html',
+  // './main.js',
+  // './manifest.json',
+  // './reset.css',
+  // './service-worker.js'
 ];
 
 // Install service worker and cache all content
